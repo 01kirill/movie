@@ -1226,7 +1226,7 @@ begin
 
 end;
 
-procedure TForm1.PictureDrawW6(Sender: TObject);
+procedure TForm1.PictureDrawW6(Sender: TObject); //fix
 var
   xc, yc, xLb, yLb: integer;
 
@@ -1253,32 +1253,32 @@ begin
   xLb := xc + round(30 * k);
   yLb := yc + round(150 * k);
   // left hip
-  screen.Canvas.LineTo(xLb - round(80 * k), yLb + round(30 * k));
+  screen.Canvas.LineTo(xLb + round(80 * k), yLb + round(30 * k));
   // left shin
-  screen.Canvas.LineTo(xLb - round(35 * k), yLb + round(85 * k));
+  screen.Canvas.LineTo(xLb + round(35 * k), yLb + round(85 * k));
   // left foot
-  screen.Canvas.LineTo(xLb - round(45 * k), yLb + round(130 * k));
+  screen.Canvas.LineTo(xLb + round(45 * k), yLb + round(130 * k));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb + round(25 * k), yLb - round(0 * k));
+  screen.Canvas.LineTo(xLb - round(25 * k), yLb - round(0 * k));
   // right shin
-  screen.Canvas.LineTo(xLb + round(53 * k), yLb + round(53 * k));
+  screen.Canvas.LineTo(xLb - round(53 * k), yLb + round(53 * k));
   // right foot
-  screen.Canvas.LineTo(xLb + round(53 * k), yLb - round(30 * k));
+  screen.Canvas.LineTo(xLb - round(53 * k), yLb - round(30 * k));
   screen.Canvas.MoveTo(xc, yc);
   // left shoulder
-  screen.Canvas.LineTo(xc - round(35 * k), yc + round(70 * k));
+  screen.Canvas.LineTo(xc + round(65 * k), yc + round(60 * k));
   // left forearm
-  screen.Canvas.LineTo(xc + round(13 * k), yc + round(83 * k));
+  screen.Canvas.LineTo(xc + round(25 * k), yc + round(83 * k));
   // left wrist
-  screen.Canvas.LineTo(xc + round(23 * k), yc + round(95 * k));
+  screen.Canvas.LineTo(xc + round(23 * k), yc + round(100 * k));
   screen.Canvas.MoveTo(xc, yc);
   // right shoulder
-  screen.Canvas.LineTo(xc + round(70 * k), yc + round(20 * k));
+  screen.Canvas.LineTo(xc - round(30 * k), yc + round(60 * k));
   // right forearm
-  screen.Canvas.LineTo(xc + round(70 * k), yc + round(80 * k));
+  screen.Canvas.LineTo(xc - round(10 * k), yc + round(90 * k));
   // right wrist
-  screen.Canvas.LineTo(xc + round(60 * k), yc + round(88 * k));
+  screen.Canvas.LineTo(xc - round(3 * k), yc + round(80 * k));
 
 end;
 
@@ -1319,7 +1319,7 @@ begin
       end;
   end;
   if i = 6 then
-    walking.Enabled := false;
+    i := 0;
 end;
 
 procedure TForm1.startClick(Sender: TObject);
@@ -1328,7 +1328,7 @@ begin
   // fps.Enabled := true;
   // fps.Interval := 100;
   walking.Enabled := true;
-  walking.Interval := 100;
+  walking.Interval := 150;
   MediaPlayer2.FileName := 'Cadillac.mp3';
   MediaPlayer1.FileName := 'Clap.mp3';
   MediaPlayer1.Open;
