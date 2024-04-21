@@ -41,9 +41,11 @@ type
 
 var
   Form1: TForm1;
-  xc, yc: integer;
+  xc, yc,xc_start, yc_start: integer;
   k: real;
   i:integer;
+  sign : boolean;
+
 
 
 implementation
@@ -54,6 +56,9 @@ implementation
 procedure TForm1.fpsTimer(Sender: TObject);
 begin
   inc(i);
+  if sign then k:=k+0.02
+  else k:=k-0.02;
+
 
   case i of
   1: begin
@@ -70,8 +75,6 @@ begin
      end;
   4: begin
        Screen.Picture:=nil;
-
-
        PictureDraw4(Sender);
        MediaPlayer1.Play;
        //хлопок
@@ -120,7 +123,10 @@ begin
     end;
   end;
   //if i=14 then fps.Enabled:=false;
-  if i=14 then i:=0;
+  if i=14 then begin
+    i:=0;
+    sign:=not sign;
+  end;
 end;
 
 
@@ -130,51 +136,51 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
-  Screen.Canvas.Pen.Width:=3;
-  xC:=450;
-  yC:=250;
+  Screen.Canvas.Pen.Width:=round(3*k);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(40*k), yC-round(40*k), xC+round(40*k), yC+round(40*k));
 
   // face
-  screen.Canvas.Ellipse(xC-17, yC+6, xC-20, yC+3);
-  screen.Canvas.Ellipse(xC+17, yC-2, xC+20, yC-5);
-  screen.Canvas.MoveTo(xC-20, yC+18);
-  screen.Canvas.LineTo(xC+25, yC+5);
+  screen.Canvas.Ellipse(xC-round(17*k), yC+round(6*k), xC-round(20*k), yC+round(3*k));
+  screen.Canvas.Ellipse(xC+round(17*k), yC-round(2*k), xC+round(20*k), yC-round(5*k));
+  screen.Canvas.MoveTo(xC-round(20*k), yC+round(18*k));
+  screen.Canvas.LineTo(xC+round(25*k), yC+round(5*k));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(40*k);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC-20,yC+160);
-  xLb:=xC-20;
-  yLb:=yC+160;
+  screen.Canvas.LineTo(xC-round(20*k),yC+round(160*k));
+  xLb:=xC-round(20*k);
+  yLb:=yC+round(160*k);
   // left hip
-  screen.Canvas.LineTo(xLb-30, yLb+80);
+  screen.Canvas.LineTo(xLb-round(30*k), yLb+round(80*k));
   // left shin
-  screen.Canvas.LineTo(xLb-80, yLb+180);
+  screen.Canvas.LineTo(xLb-round(80*k), yLb+round(180*k));
   // left foot
-  screen.Canvas.LineTo(xLb-30, yLb+200);
+  screen.Canvas.LineTo(xLb-round(30*k), yLb+round(200*k));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+90, yLb+80);
+  screen.Canvas.LineTo(xLb+round(90*k), yLb+round(80*k));
   // right shin
-  screen.Canvas.LineTo(xLb+80, yLb+180);
+  screen.Canvas.LineTo(xLb+round(80*k), yLb+round(180*k));
   // right foot
-  screen.Canvas.LineTo(xLb+110, yLb+200);
+  screen.Canvas.LineTo(xLb+round(110*k), yLb+round(200*k));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-70, yC+110);
+  screen.Canvas.LineTo(xC-round(70*k), yC+round(110*k));
   // left forearm
-  screen.Canvas.LineTo(xC+5, yC+25);
+  screen.Canvas.LineTo(xC+round(5*k), yC+round(25*k));
   // left wrist
-  screen.Canvas.LineTo(xC+5, yC+5);
+  screen.Canvas.LineTo(xC+round(5*k), yC+round(5*k));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+75, yC-35);
+  screen.Canvas.LineTo(xC+round(75*k), yC-round(35*k));
   // right forearm
-  screen.Canvas.LineTo(xC+100, yC-20);
+  screen.Canvas.LineTo(xC+round(100*k), yC-round(20*k));
   // right wrist
-  screen.Canvas.LineTo(xC+95, yC);
+  screen.Canvas.LineTo(xC+round(95*k), yC);
 end;
 
 
@@ -183,49 +189,49 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+  Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start+round(10*k);
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(40*k), yC-round(40*k), xC+round(40*k), yC+round(40*k));
   // face
-  screen.Canvas.Ellipse(xC-12, yC-5, xC-15, yC-8);
-  screen.Canvas.Ellipse(xC+20, yC-15, xC+23, yC-18);
-  screen.Canvas.MoveTo(xC-5, yC+2);
-  screen.Canvas.LineTo(xC+25, yC-10);
+  screen.Canvas.Ellipse(xC-round(k*12), yC-round(k*5), xC-round(k*15), yC-round(k*8));
+  screen.Canvas.Ellipse(xC+round(k*20), yC-round(k*15), xC+round(k*23), yC-round(k*18));
+  screen.Canvas.MoveTo(xC-round(k*5), yC+round(k*2));
+  screen.Canvas.LineTo(xC+round(k*25), yC-round(k*10));
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC,yC+160);
+  screen.Canvas.LineTo(xC,yC+round(k*160));
   xLb:=xC;
-  yLb:=yC+160;
+  yLb:=yC+round(k*160);
   // left hip
-  screen.Canvas.LineTo(xLb-30, yLb+80);
+  screen.Canvas.LineTo(xLb-round(k*30), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb-140, yLb+50);
+  screen.Canvas.LineTo(xLb-round(k*140), yLb+round(k*50));
   // left foot
-  screen.Canvas.LineTo(xLb-150, yLb+85);
+  screen.Canvas.LineTo(xLb-round(k*150), yLb+round(k*85));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+70, yLb+80);
+  screen.Canvas.LineTo(xLb+round(k*70), yLb+round(k*80));
   // right shin
-  screen.Canvas.LineTo(xLb+60, yLb+180);
+  screen.Canvas.LineTo(xLb+round(k*60), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb+90, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-30, yC+20);
+  screen.Canvas.LineTo(xC-round(k*30), yC+round(k*20));
   // left forearm
-  screen.Canvas.LineTo(xC-10, yC+115);
+  screen.Canvas.LineTo(xC-round(k*10), yC+round(k*115));
   // left wrist
-  screen.Canvas.LineTo(xC+5, yC+5);
+  screen.Canvas.LineTo(xC+round(k*5), yC+round(k*5));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+75, yC+45);
+  screen.Canvas.LineTo(xC+round(k*75), yC+round(k*45));
   // right forearm
-  screen.Canvas.LineTo(xC+100, yC+55);
+  screen.Canvas.LineTo(xC+round(k*100), yC+round(k*55));
   // right wrist
-  screen.Canvas.LineTo(xC+95, yC);
+  screen.Canvas.LineTo(xC+round(k*95), yC);
 end;
 
 procedure TForm1.PictureDraw3(Sender: TObject);
@@ -233,53 +239,53 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC-12, yC+6, xC-15, yC+3);
-  screen.Canvas.Ellipse(xC+20, yC-2, xC+23, yC-5);
-  screen.Canvas.MoveTo(xC-20, yC+18);
-  screen.Canvas.LineTo(xC+5, yC+15);
-  screen.Canvas.LineTo(xC+25, yC+5);
+  screen.Canvas.Ellipse(xC-round(k*12), yC+round(k*6), xC-round(k*15), yC+round(k*3));
+  screen.Canvas.Ellipse(xC+round(k*20), yC-round(k*2), xC+round(k*23), yC-round(k*5));
+  screen.Canvas.MoveTo(xC-round(k*20), yC+round(k*18));
+  screen.Canvas.LineTo(xC+round(k*5), yC+round(k*15));
+  screen.Canvas.LineTo(xC+round(k*25), yC+round(k*5));
 
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC+20,yC+145);
-  xLb:=xC+20;
-  yLb:=yC+145;
+  screen.Canvas.LineTo(xC+round(k*20),yC+round(k*145));
+  xLb:=xC+round(k*20);
+  yLb:=yC+round(k*145);
   // left hip
-  screen.Canvas.LineTo(xLb-30, yLb+80);
+  screen.Canvas.LineTo(xLb-round(k*30), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb-130, yLb+10);
+  screen.Canvas.LineTo(xLb-round(k*130), yLb+round(k*10));
   // left foot
-  screen.Canvas.LineTo(xLb-140, yLb+45);
+  screen.Canvas.LineTo(xLb-round(k*140), yLb+round(k*45));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+70, yLb+60);
+  screen.Canvas.LineTo(xLb+round(k*70), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb+45, yLb+180);
+  screen.Canvas.LineTo(xLb+round(k*45), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb+90, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+30, yC+20);
+  screen.Canvas.LineTo(xC+round(k*30), yC+round(k*20));
   // left forearm
-  screen.Canvas.LineTo(xC+55, yC-45);
+  screen.Canvas.LineTo(xC+round(k*55), yC-round(k*45));
   // left wrist
-  screen.Canvas.LineTo(xC+50, yC-65);
+  screen.Canvas.LineTo(xC+round(k*50), yC-round(k*65));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+75, yC+30);
+  screen.Canvas.LineTo(xC+round(k*75), yC+round(k*30));
   // right forearm
-  screen.Canvas.LineTo(xC+90, yC-50);
+  screen.Canvas.LineTo(xC+round(k*90), yC-round(k*50));
   // right wrist
-  screen.Canvas.LineTo(xC+85, yC-70);
+  screen.Canvas.LineTo(xC+round(k*85), yC-round(k*70));
 end;
 
 
@@ -287,65 +293,67 @@ procedure TForm1.PictureDraw4(Sender: TObject);
 var
   xC, yC, xLb, yLb : integer;
 
+
+
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC-18, yC-6, xC-15, yC-3);
-  screen.Canvas.Ellipse(xC+17, yC+2, xC+20, yC+5);
-  screen.Canvas.MoveTo(xC-20, yC+8);
-  screen.Canvas.LineTo(xC+20, yC+18);
+  screen.Canvas.Ellipse(xC-round(k*18), yC-round(k*6), xC-round(k*15), yC-round(k*3));
+  screen.Canvas.Ellipse(xC+round(k*17), yC+round(k*2), xC+round(k*20), yC+round(k*5));
+  screen.Canvas.MoveTo(xC-round(k*20), yC+round(k*8));
+  screen.Canvas.LineTo(xC+round(k*20), yC+round(k*18));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC+30,yC+140);
-  xLb:=xC+30;
-  yLb:=yC+140;
+  screen.Canvas.LineTo(xC+round(k*30),yC+round(k*140));
+  xLb:=xC+round(k*30);
+  yLb:=yC+round(k*140);
   // left hip
-  screen.Canvas.LineTo(xLb-20, yLb+80);
+  screen.Canvas.LineTo(xLb-round(k*20), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb-100, yLb+150);
+  screen.Canvas.LineTo(xLb-round(k*100), yLb+round(k*150));
   // left foot
-  screen.Canvas.LineTo(xLb-105, yLb+185);
+  screen.Canvas.LineTo(xLb-round(k*105), yLb+round(k*185));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+70, yLb+60);
+  screen.Canvas.LineTo(xLb+round(k*70), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb+45, yLb+180);
+  screen.Canvas.LineTo(xLb+round(k*45), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb+90, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+30, yC+70);
+  screen.Canvas.LineTo(xC+round(k*30), yC+round(k*70));
   // left forearm
-  screen.Canvas.LineTo(xC+45, yC-15);
+  screen.Canvas.LineTo(xC+round(k*45), yC-round(k*15));
   // left wrist
-  screen.Canvas.LineTo(xC+45, yC-45);
+  screen.Canvas.LineTo(xC+round(k*45), yC-round(k*45));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+75, yC+45);
+  screen.Canvas.LineTo(xC+round(k*75), yC+round(k*45));
   // right forearm
-  screen.Canvas.LineTo(xC+47, yC-15);
+  screen.Canvas.LineTo(xC+round(k*47), yC-round(k*15));
   // right wrist
-  screen.Canvas.LineTo(xC+47, yC-45);
+  screen.Canvas.LineTo(xC+round(k*47), yC-round(k*45));
   //clapEffect
-  screen.Canvas.MoveTo(xC+60, yC-55);
-  screen.Canvas.LineTo(xC+75, yC-80);
-  screen.Canvas.MoveTo(xC+70, yC-40);
-  screen.Canvas.LineTo(xC+95, yC-45);
-  screen.Canvas.MoveTo(xC+60, yC-25);
-  screen.Canvas.LineTo(xC+85, yC-5);
-  screen.Canvas.MoveTo(xC+30, yC-55);
-  screen.Canvas.LineTo(xC+10, yC-80);
-  screen.Canvas.MoveTo(xC+30, yC-40);
-  screen.Canvas.LineTo(xC+10, yC-45);
-  screen.Canvas.MoveTo(xC+35, yC-25);
-  screen.Canvas.LineTo(xC+15, yC-15);
+  screen.Canvas.MoveTo(xC+round(k*60), yC-round(k*55));
+  screen.Canvas.LineTo(xC+round(k*75), yC-round(k*80));
+  screen.Canvas.MoveTo(xC+round(k*70), yC-round(k*40));
+  screen.Canvas.LineTo(xC+round(k*95), yC-round(k*45));
+  screen.Canvas.MoveTo(xC+round(k*60), yC-round(k*25));
+  screen.Canvas.LineTo(xC+round(k*85), yC-round(k*5));
+  screen.Canvas.MoveTo(xC+round(k*30), yC-round(k*55));
+  screen.Canvas.LineTo(xC+round(k*10), yC-round(k*80));
+  screen.Canvas.MoveTo(xC+round(k*30), yC-round(k*40));
+  screen.Canvas.LineTo(xC+round(k*10), yC-round(k*45));
+  screen.Canvas.MoveTo(xC+round(k*35), yC-round(k*25));
+  screen.Canvas.LineTo(xC+round(k*15), yC-round(k*15));
 end;
 
 procedure TForm1.PictureDraw5(Sender: TObject);
@@ -353,51 +361,51 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC-14, yC-3, xC-11, yC);
-  screen.Canvas.Ellipse(xC+20, yC-3, xC+23, yC);
-  screen.Canvas.MoveTo(xC-16, yC+10);
-  screen.Canvas.LineTo(xC+26, yC+13);
+  screen.Canvas.Ellipse(xC-round(k*14), yC-round(k*3), xC-round(k*11), yC);
+  screen.Canvas.Ellipse(xC+round(k*20), yC-round(k*3), xC+round(k*23), yC);
+  screen.Canvas.MoveTo(xC-round(k*16), yC+round(k*10));
+  screen.Canvas.LineTo(xC+round(k*26), yC+round(k*13));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC+20,yC+145);
-  xLb:=xC+20;
-  yLb:=yC+145;
+  screen.Canvas.LineTo(xC+round(k*20),yC+round(k*145));
+  xLb:=xC+round(k*20);
+  yLb:=yC+round(k*145);
   // left hip
-  screen.Canvas.LineTo(xLb-20, yLb+80);
+  screen.Canvas.LineTo(xLb-round(k*20), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb-60, yLb+195);
+  screen.Canvas.LineTo(xLb-round(k*60), yLb+round(k*195));
   // left foot
-  screen.Canvas.LineTo(xLb-25, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*25), yLb+round(k*200));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+70, yLb+60);
+  screen.Canvas.LineTo(xLb+round(k*70), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb+45, yLb+180);
+  screen.Canvas.LineTo(xLb+round(k*45), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb+90, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-25, yC+90);
+  screen.Canvas.LineTo(xC-round(k*25), yC+round(k*90));
   // left forearm
-  screen.Canvas.LineTo(xC+45, yC+25);
+  screen.Canvas.LineTo(xC+round(k*45), yC+round(k*25));
   // left wrist
-  screen.Canvas.LineTo(xC+50, yC+50);
+  screen.Canvas.LineTo(xC+round(k*50), yC+round(k*50));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+68, yC+55);
+  screen.Canvas.LineTo(xC+round(k*68), yC+round(k*55));
   // right forearm
-  screen.Canvas.LineTo(xC+43, yC-15);
+  screen.Canvas.LineTo(xC+round(k*43), yC-round(k*15));
   // right wrist
-  screen.Canvas.LineTo(xC+15, yC);
+  screen.Canvas.LineTo(xC+round(k*15), yC);
 end;
 
 procedure TForm1.PictureDraw6(Sender: TObject);
@@ -405,52 +413,52 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC-22, yC-7, xC-19, yC-4);
-  screen.Canvas.Ellipse(xC+13, yC-3, xC+15, yC);
-  screen.Canvas.MoveTo(xC-27, yC+10);
-  screen.Canvas.LineTo(xC+2, yC+13);
-  screen.Canvas.LineTo(xC+22, yC+12);
+  screen.Canvas.Ellipse(xC-round(k*22), yC-round(k*7), xC-round(k*19), yC-round(k*4));
+  screen.Canvas.Ellipse(xC+round(k*13), yC-round(k*3), xC+round(k*15), yC);
+  screen.Canvas.MoveTo(xC-round(k*27), yC+round(k*10));
+  screen.Canvas.LineTo(xC+round(k*2), yC+round(k*13));
+  screen.Canvas.LineTo(xC+round(k*22), yC+round(k*12));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC,yC+150);
+  screen.Canvas.LineTo(xC,yC+round(k*150));
   xLb:=xC;
-  yLb:=yC+150;
+  yLb:=yC+round(k*150);
   // left hip
-  screen.Canvas.LineTo(xLb-35, yLb+90);
+  screen.Canvas.LineTo(xLb-round(k*35), yLb+round(k*90));
   // left shin
-  screen.Canvas.LineTo(xLb-25, yLb+160);
+  screen.Canvas.LineTo(xLb-round(k*25), yLb+round(k*160));
   // left foot
-  screen.Canvas.LineTo(xLb-35, yLb+175);
+  screen.Canvas.LineTo(xLb-round(k*35), yLb+round(k*175));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+65, yLb+60);
+  screen.Canvas.LineTo(xLb+round(k*65), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb+45, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*45), yLb+round(k*200));
   // right foot
-  screen.Canvas.LineTo(xLb+80, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*80), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-65, yC+80);
+  screen.Canvas.LineTo(xC-round(k*65), yC+round(k*80));
   // left forearm
-  screen.Canvas.LineTo(xC-60, yC+140);
+  screen.Canvas.LineTo(xC-round(k*60), yC+round(k*140));
   // left wrist
-  screen.Canvas.LineTo(xC-45, yC+150);
+  screen.Canvas.LineTo(xC-round(k*45), yC+round(k*150));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+38, yC+95);
+  screen.Canvas.LineTo(xC+round(k*38), yC+round(k*95));
   // right forearm
-  screen.Canvas.LineTo(xC-20, yC+45);
+  screen.Canvas.LineTo(xC-round(k*20), yC+round(k*45));
   // right wrist
-  screen.Canvas.LineTo(xC-35, yC+55);
+  screen.Canvas.LineTo(xC-round(k*35), yC+round(k*55));
 end;
 
 procedure TForm1.PictureDraw7(Sender: TObject);
@@ -458,51 +466,51 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
    // face
-  screen.Canvas.Ellipse(xC-25, yC-1, xC-22, yC-4);
-  screen.Canvas.Ellipse(xC+10, yC, xC+13, yC+3);
-  screen.Canvas.MoveTo(xC-27, yC+10);
-  screen.Canvas.LineTo(xC+17, yC+12);
+  screen.Canvas.Ellipse(xC-round(k*25), yC-round(k*1), xC-round(k*22), yC-round(k*4));
+  screen.Canvas.Ellipse(xC+round(k*10), yC, xC+round(k*13), yC+round(k*3));
+  screen.Canvas.MoveTo(xC-round(k*27), yC+round(k*10));
+  screen.Canvas.LineTo(xC+round(k*17), yC+round(k*12));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC,yC+150);
+  screen.Canvas.LineTo(xC,yC+round(k*150));
   xLb:=xC;
-  yLb:=yC+150;
+  yLb:=yC+round(k*150);
   // left hip
-  screen.Canvas.LineTo(xLb-35, yLb+90);
+  screen.Canvas.LineTo(xLb-round(k*35), yLb+round(k*90));
   // left shin
-  screen.Canvas.LineTo(xLb-25, yLb+180);
+  screen.Canvas.LineTo(xLb-round(k*25), yLb+round(k*180));
   // left foot
-  screen.Canvas.LineTo(xLb-35, yLb+195);
+  screen.Canvas.LineTo(xLb-round(k*35), yLb+round(k*195));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb+65, yLb+60);
+  screen.Canvas.LineTo(xLb+round(k*65), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb+45, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*45), yLb+round(k*200));
   // right foot
-  screen.Canvas.LineTo(xLb+80, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*80), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-70, yC-5);
+  screen.Canvas.LineTo(xC-round(k*70), yC-round(k*5));
   // left forearm
-  screen.Canvas.LineTo(xC-120, yC+40);
+  screen.Canvas.LineTo(xC-round(k*120), yC+round(k*40));
   // left wrist
-  screen.Canvas.LineTo(xC-120, yC+45);
+  screen.Canvas.LineTo(xC-round(k*120), yC+round(k*45));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC+30, yC+55);
+  screen.Canvas.LineTo(xC+round(k*30), yC+round(k*55));
   // right forearm
-  screen.Canvas.LineTo(xC-50, yC+40);
+  screen.Canvas.LineTo(xC-round(k*50), yC+round(k*40));
   // right wrist
-  screen.Canvas.LineTo(xC-65, yC+45);
+  screen.Canvas.LineTo(xC-round(k*65), yC+round(k*45));
 end;
 
 
@@ -511,51 +519,51 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
-  Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=250;
+  Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start-round(k*10);
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC-17, yC+6, xC-20, yC+3);
-  screen.Canvas.Ellipse(xC+17, yC-2, xC+20, yC-5);
-  screen.Canvas.MoveTo(xC-20, yC+18);
-  screen.Canvas.LineTo(xC+25, yC+5);
+  screen.Canvas.Ellipse(xC-round(k*17), yC+round(k*6), xC-round(k*20), yC+round(k*3));
+  screen.Canvas.Ellipse(xC+round(k*17), yC-round(k*2), xC+round(k*20), yC-round(k*5));
+  screen.Canvas.MoveTo(xC-round(k*20), yC+round(k*18));
+  screen.Canvas.LineTo(xC+round(k*25), yC+round(k*5));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC+20,yC+160);
-  xLb:=xC+20;
-  yLb:=yC+160;
+  screen.Canvas.LineTo(xC+round(k*20),yC+round(k*160));
+  xLb:=xC+round(k*20);
+  yLb:=yC+round(k*160);
   // left hip
-  screen.Canvas.LineTo(xLb+30, yLb+80);
+  screen.Canvas.LineTo(xLb+round(k*30), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb+80, yLb+180);
+  screen.Canvas.LineTo(xLb+round(k*80), yLb+round(k*180));
   // left foot
-  screen.Canvas.LineTo(xLb+30, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*30), yLb+round(k*200));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-90, yLb+80);
+  screen.Canvas.LineTo(xLb-round(k*90), yLb+round(k*80));
   // right shin
-  screen.Canvas.LineTo(xLb-80, yLb+180);
+  screen.Canvas.LineTo(xLb-round(k*80), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb-110, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*110), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+70, yC+110);
+  screen.Canvas.LineTo(xC+round(k*70), yC+round(k*110));
   // left forearm
-  screen.Canvas.LineTo(xC-5, yC+25);
+  screen.Canvas.LineTo(xC-round(k*5), yC+round(k*25));
   // left wrist
-  screen.Canvas.LineTo(xC-5, yC+5);
+  screen.Canvas.LineTo(xC-round(k*5), yC+round(k*5));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-75, yC-35);
+  screen.Canvas.LineTo(xC-round(k*75), yC-round(k*35));
   // right forearm
-  screen.Canvas.LineTo(xC-100, yC-20);
+  screen.Canvas.LineTo(xC-round(k*100), yC-round(k*20));
   // right wrist
-  screen.Canvas.LineTo(xC-95, yC);
+  screen.Canvas.LineTo(xC-round(k*95), yC);
 end;
 
 
@@ -564,50 +572,50 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+ xC:=xc_start;
+  yC:=yc_start+round(k*10);
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
   // face
-  screen.Canvas.Ellipse(xC+12, yC-5, xC+15, yC-8);
-  screen.Canvas.Ellipse(xC-20, yC-15, xC-23, yC-18);
-  screen.Canvas.MoveTo(xC+5, yC+2);
-  screen.Canvas.LineTo(xC-25, yC-10);
+  screen.Canvas.Ellipse(xC+round(k*12), yC-round(k*5), xC+round(k*15), yC-round(k*8));
+  screen.Canvas.Ellipse(xC-round(k*20), yC-round(k*15), xC-round(k*23), yC-round(k*18));
+  screen.Canvas.MoveTo(xC+round(k*5), yC+round(k*2));
+  screen.Canvas.LineTo(xC-round(k*25), yC-round(k*10));
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC,yC+160);
+  screen.Canvas.LineTo(xC,yC+round(k*160));
   xLb:=xC;
-  yLb:=yC+160;
+  yLb:=yC+round(k*160);
   // left hip
-  screen.Canvas.LineTo(xLb+30, yLb+80);
+  screen.Canvas.LineTo(xLb+round(k*30), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb+140, yLb+50);
+  screen.Canvas.LineTo(xLb+round(k*140), yLb+round(k*50));
   // left foot
-  screen.Canvas.LineTo(xLb+150, yLb+85);
+  screen.Canvas.LineTo(xLb+round(k*150), yLb+round(k*85));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-70, yLb+80);
+  screen.Canvas.LineTo(xLb-round(k*70), yLb+round(k*80));
   // right shin
-  screen.Canvas.LineTo(xLb-60, yLb+180);
+  screen.Canvas.LineTo(xLb-round(k*60), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb-90, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+30, yC+20);
+  screen.Canvas.LineTo(xC+round(k*30), yC+round(k*20));
   // left forearm
 
-  screen.Canvas.LineTo(xC+10, yC+115);
+  screen.Canvas.LineTo(xC+round(k*10), yC+round(k*115));
   // left wrist
-  screen.Canvas.LineTo(xC-5, yC+5);
+  screen.Canvas.LineTo(xC-round(k*5), yC+round(k*5));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-75, yC+45);
+  screen.Canvas.LineTo(xC-round(k*75), yC+round(k*45));
   // right forearm
-  screen.Canvas.LineTo(xC-100, yC+55);
+  screen.Canvas.LineTo(xC-round(k*100), yC+round(k*55));
   // right wrist
-  screen.Canvas.LineTo(xC-95, yC);
+  screen.Canvas.LineTo(xC-round(k*95), yC);
 end;
 
 procedure TForm1.PictureDraw10(Sender: TObject);
@@ -615,53 +623,53 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC+12, yC+6, xC+15, yC+3);
-  screen.Canvas.Ellipse(xC-20, yC-2, xC-23, yC-5);
-  screen.Canvas.MoveTo(xC+20, yC+18);
-  screen.Canvas.LineTo(xC-5, yC+15);
-  screen.Canvas.LineTo(xC-25, yC+5);
+  screen.Canvas.Ellipse(xC+round(k*12), yC+round(k*6), xC+round(k*15), yC+round(k*3));
+  screen.Canvas.Ellipse(xC-round(k*20), yC-round(k*2), xC-round(k*23), yC-round(k*5));
+  screen.Canvas.MoveTo(xC+round(k*20), yC+round(k*18));
+  screen.Canvas.LineTo(xC-round(k*5), yC+round(k*15));
+  screen.Canvas.LineTo(xC-round(k*25), yC+round(k*5));
 
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC-20,yC+145);
-  xLb:=xC-20;
-  yLb:=yC+145;
+  screen.Canvas.LineTo(xC-round(k*20),yC+round(k*145));
+  xLb:=xC-round(k*20);
+  yLb:=yC+round(k*145);
   // left hip
-  screen.Canvas.LineTo(xLb+30, yLb+80);
+  screen.Canvas.LineTo(xLb+round(k*30), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb+130, yLb+10);
+  screen.Canvas.LineTo(xLb+round(k*130), yLb+round(k*10));
   // left foot
-  screen.Canvas.LineTo(xLb+140, yLb+45);
+  screen.Canvas.LineTo(xLb+round(k*140), yLb+round(k*45));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-70, yLb+60);
+  screen.Canvas.LineTo(xLb-round(k*70), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb-45, yLb+180);
+  screen.Canvas.LineTo(xLb-round(k*45), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb-90, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-30, yC+20);
+  screen.Canvas.LineTo(xC-round(k*30), yC+round(k*20));
   // left forearm
-  screen.Canvas.LineTo(xC-55, yC-45);
+  screen.Canvas.LineTo(xC-round(k*55), yC-round(k*45));
   // left wrist
-  screen.Canvas.LineTo(xC-50, yC-65);
+  screen.Canvas.LineTo(xC-round(k*50), yC-round(k*65));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-75, yC+30);
+  screen.Canvas.LineTo(xC-round(k*75), yC+round(k*30));
   // right forearm
-  screen.Canvas.LineTo(xC-90, yC-50);
+  screen.Canvas.LineTo(xC-round(k*90), yC-round(k*50));
   // right wrist
-  screen.Canvas.LineTo(xC-85, yC-70);
+  screen.Canvas.LineTo(xC-round(k*85), yC-round(k*70));
 end;
 
 procedure TForm1.PictureDraw11(Sender: TObject);
@@ -669,64 +677,64 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+ xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC+18, yC-6, xC+15, yC-3);
-  screen.Canvas.Ellipse(xC-17, yC+2, xC-20, yC+5);
-  screen.Canvas.MoveTo(xC+20, yC+8);
-  screen.Canvas.LineTo(xC-20, yC+18);
+  screen.Canvas.Ellipse(xC+round(k*18), yC-round(k*6), xC+round(k*15), yC-round(k*3));
+  screen.Canvas.Ellipse(xC-round(k*17), yC+round(k*2), xC-round(k*20), yC+round(k*5));
+  screen.Canvas.MoveTo(xC+round(k*20), yC+round(k*8));
+  screen.Canvas.LineTo(xC-round(k*20), yC+round(k*18));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC-30,yC+140);
-  xLb:=xC-30;
-  yLb:=yC+140;
+  screen.Canvas.LineTo(xC-round(k*30),yC+round(k*140));
+  xLb:=xC-round(k*30);
+  yLb:=yC+round(k*140);
   // left hip
-  screen.Canvas.LineTo(xLb+20, yLb+80);
+  screen.Canvas.LineTo(xLb+round(k*20), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb+100, yLb+150);
+  screen.Canvas.LineTo(xLb+round(k*100), yLb+round(k*150));
   // left foot
-  screen.Canvas.LineTo(xLb+105, yLb+185);
+  screen.Canvas.LineTo(xLb+round(k*105), yLb+round(k*185));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-70, yLb+60);
+  screen.Canvas.LineTo(xLb-round(k*70), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb-45, yLb+180);
+  screen.Canvas.LineTo(xLb-round(k*45), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb-90, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC-30, yC+70);
+  screen.Canvas.LineTo(xC-round(k*30), yC+round(k*70));
   // left forearm
-  screen.Canvas.LineTo(xC-45, yC-15);
+  screen.Canvas.LineTo(xC-round(k*45), yC-round(k*15));
   // left wrist
-  screen.Canvas.LineTo(xC-45, yC-45);
+  screen.Canvas.LineTo(xC-round(k*45), yC-round(k*45));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-75, yC+45);
+  screen.Canvas.LineTo(xC-round(k*75), yC+round(k*45));
   // right forearm
-  screen.Canvas.LineTo(xC-47, yC-15);
+  screen.Canvas.LineTo(xC-round(k*47), yC-round(k*15));
   // right wrist
-  screen.Canvas.LineTo(xC-47, yC-45);
+  screen.Canvas.LineTo(xC-round(k*47), yC-round(k*45));
   //clapEffect
-  screen.Canvas.MoveTo(xC-60, yC-55);
-  screen.Canvas.LineTo(xC-75, yC-80);
-  screen.Canvas.MoveTo(xC-70, yC-40);
-  screen.Canvas.LineTo(xC-95, yC-45);
-  screen.Canvas.MoveTo(xC-60, yC-25);
-  screen.Canvas.LineTo(xC-85, yC-5);
-  screen.Canvas.MoveTo(xC-30, yC-55);
-  screen.Canvas.LineTo(xC-10, yC-80);
-  screen.Canvas.MoveTo(xC-30, yC-40);
-  screen.Canvas.LineTo(xC-10, yC-45);
-  screen.Canvas.MoveTo(xC-35, yC-25);
-  screen.Canvas.LineTo(xC-15, yC-15);
+  screen.Canvas.MoveTo(xC-round(k*60), yC-round(k*55));
+  screen.Canvas.LineTo(xC-round(k*75), yC-round(k*80));
+  screen.Canvas.MoveTo(xC-round(k*70), yC-round(k*40));
+  screen.Canvas.LineTo(xC-round(k*95), yC-round(k*45));
+  screen.Canvas.MoveTo(xC-round(k*60), yC-round(k*25));
+  screen.Canvas.LineTo(xC-round(k*85), yC-round(k*5));
+  screen.Canvas.MoveTo(xC-round(k*30), yC-round(k*55));
+  screen.Canvas.LineTo(xC-round(k*10), yC-round(k*80));
+  screen.Canvas.MoveTo(xC-round(k*30), yC-round(k*40));
+  screen.Canvas.LineTo(xC-round(k*10), yC-round(k*45));
+  screen.Canvas.MoveTo(xC-round(k*35), yC-round(k*25));
+  screen.Canvas.LineTo(xC-round(k*15), yC-round(k*15));
 end;
 
 procedure TForm1.PictureDraw12(Sender: TObject);
@@ -734,51 +742,51 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC+14, yC-3, xC+11, yC);
-  screen.Canvas.Ellipse(xC-20, yC-3, xC-23, yC);
-  screen.Canvas.MoveTo(xC+16, yC+10);
-  screen.Canvas.LineTo(xC-26, yC+13);
+  screen.Canvas.Ellipse(xC+round(k*14), yC-round(k*3), xC+round(k*11), yC);
+  screen.Canvas.Ellipse(xC-round(k*20), yC-round(k*3), xC-round(k*23), yC);
+  screen.Canvas.MoveTo(xC+round(k*16), yC+round(k*10));
+  screen.Canvas.LineTo(xC-round(k*26), yC+round(k*13));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC-20,yC+145);
-  xLb:=xC-20;
-  yLb:=yC+145;
+  screen.Canvas.LineTo(xC-round(k*20),yC+round(k*145));
+  xLb:=xC-round(k*20);
+  yLb:=yC+round(k*145);
   // left hip
-  screen.Canvas.LineTo(xLb+20, yLb+80);
+  screen.Canvas.LineTo(xLb+round(k*20), yLb+round(k*80));
   // left shin
-  screen.Canvas.LineTo(xLb+60, yLb+195);
+  screen.Canvas.LineTo(xLb+round(k*60), yLb+round(k*195));
   // left foot
-  screen.Canvas.LineTo(xLb+25, yLb+200);
+  screen.Canvas.LineTo(xLb+round(k*25), yLb+round(k*200));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-70, yLb+60);
+  screen.Canvas.LineTo(xLb-round(k*70), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb-45, yLb+180);
+  screen.Canvas.LineTo(xLb-round(k*45), yLb+round(k*180));
   // right foot
-  screen.Canvas.LineTo(xLb-90, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*90), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+25, yC+90);
+  screen.Canvas.LineTo(xC+round(k*25), yC+round(k*90));
   // left forearm
-  screen.Canvas.LineTo(xC-45, yC+25);
+  screen.Canvas.LineTo(xC-round(k*45), yC+round(k*25));
   // left wrist
-  screen.Canvas.LineTo(xC-50, yC+50);
+  screen.Canvas.LineTo(xC-round(k*50), yC+round(k*50));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-68, yC+55);
+  screen.Canvas.LineTo(xC-round(k*68), yC+round(k*55));
   // right forearm
-  screen.Canvas.LineTo(xC-43, yC-15);
+  screen.Canvas.LineTo(xC-round(k*43), yC-round(k*15));
   // right wrist
-  screen.Canvas.LineTo(xC-15, yC);
+  screen.Canvas.LineTo(xC-round(k*15), yC);
 end;
 
 procedure TForm1.PictureDraw13(Sender: TObject);
@@ -786,52 +794,52 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+ xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
   // face
-  screen.Canvas.Ellipse(xC+22, yC-7, xC+19, yC-4);
-  screen.Canvas.Ellipse(xC-13, yC-3, xC-15, yC);
-  screen.Canvas.MoveTo(xC+27, yC+10);
-  screen.Canvas.LineTo(xC-2, yC+13);
-  screen.Canvas.LineTo(xC-22, yC+12);
+  screen.Canvas.Ellipse(xC+round(k*22), yC-round(k*7), xC+round(k*19), yC-round(k*4));
+  screen.Canvas.Ellipse(xC-round(k*13), yC-round(k*3), xC-round(k*15), yC);
+  screen.Canvas.MoveTo(xC+round(k*27), yC+round(k*10));
+  screen.Canvas.LineTo(xC-round(k*2), yC+round(k*13));
+  screen.Canvas.LineTo(xC-round(k*22), yC+round(k*12));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC,yC+150);
+  screen.Canvas.LineTo(xC,yC+round(k*150));
   xLb:=xC;
-  yLb:=yC+150;
+  yLb:=yC+round(k*150);
   // left hip
-  screen.Canvas.LineTo(xLb+35, yLb+90);
+  screen.Canvas.LineTo(xLb+round(k*35), yLb+round(k*90));
   // left shin
-  screen.Canvas.LineTo(xLb+25, yLb+160);
+  screen.Canvas.LineTo(xLb+round(k*25), yLb+round(k*160));
   // left foot
-  screen.Canvas.LineTo(xLb+35, yLb+175);
+  screen.Canvas.LineTo(xLb+round(k*35), yLb+round(k*175));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-65, yLb+60);
+  screen.Canvas.LineTo(xLb-round(k*65), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb-45, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*45), yLb+round(k*200));
   // right foot
-  screen.Canvas.LineTo(xLb-80, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*80), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+65, yC+80);
+  screen.Canvas.LineTo(xC+round(k*65), yC+round(k*80));
   // left forearm
-  screen.Canvas.LineTo(xC+60, yC+140);
+  screen.Canvas.LineTo(xC+round(k*60), yC+round(k*140));
   // left wrist
-  screen.Canvas.LineTo(xC+45, yC+150);
+  screen.Canvas.LineTo(xC+round(k*45), yC+round(k*150));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-38, yC+95);
+  screen.Canvas.LineTo(xC-round(k*38), yC+round(k*95));
   // right forearm
-  screen.Canvas.LineTo(xC+20, yC+45);
+  screen.Canvas.LineTo(xC+round(k*20), yC+round(k*45));
   // right wrist
-  screen.Canvas.LineTo(xC+35, yC+55);
+  screen.Canvas.LineTo(xC+round(k*35), yC+round(k*55));
 end;
 
 procedure TForm1.PictureDraw14(Sender: TObject);
@@ -839,51 +847,51 @@ var
   xC, yC, xLb, yLb : integer;
 
 begin
- Screen.Canvas.Pen.Width:=3;
-  xC:=460;
-  yC:=260;
+ Screen.Canvas.Pen.Width:=round(k*3);
+  xC:=xc_start;
+  yC:=yc_start;
   // head
-  screen.Canvas.Ellipse(xC-40, yC-40, xC+40, yC+40);
+  screen.Canvas.Ellipse(xC-round(k*40), yC-round(k*40), xC+round(k*40), yC+round(k*40));
 
    // face
-  screen.Canvas.Ellipse(xC+25, yC-1, xC+22, yC-4);
-  screen.Canvas.Ellipse(xC-10, yC, xC-13, yC+3);
-  screen.Canvas.MoveTo(xC+27, yC+10);
-  screen.Canvas.LineTo(xC-17, yC+12);
+  screen.Canvas.Ellipse(xC+round(k*25), yC-round(k*1), xC+round(k*22), yC-round(k*4));
+  screen.Canvas.Ellipse(xC-round(k*10), yC, xC-round(k*13), yC+round(k*3));
+  screen.Canvas.MoveTo(xC+round(k*27), yC+round(k*10));
+  screen.Canvas.LineTo(xC-round(k*17), yC+round(k*12));
 
   // body
-  yC:=yC+40;
+  yC:=yC+round(k*40);
   screen.Canvas.MoveTo(xC,yC);
-  screen.Canvas.LineTo(xC,yC+150);
+  screen.Canvas.LineTo(xC,yC+round(k*150));
   xLb:=xC;
-  yLb:=yC+150;
+  yLb:=yC+round(k*150);
   // left hip
-  screen.Canvas.LineTo(xLb+35, yLb+90);
+  screen.Canvas.LineTo(xLb+round(k*35), yLb+round(k*90));
   // left shin
-  screen.Canvas.LineTo(xLb+25, yLb+180);
+  screen.Canvas.LineTo(xLb+round(k*25), yLb+round(k*180));
   // left foot
-  screen.Canvas.LineTo(xLb+35, yLb+195);
+  screen.Canvas.LineTo(xLb+round(k*35), yLb+round(k*195));
   screen.Canvas.MoveTo(xLb, yLb);
   // right hip
-  screen.Canvas.LineTo(xLb-65, yLb+60);
+  screen.Canvas.LineTo(xLb-round(k*65), yLb+round(k*60));
   // right shin
-  screen.Canvas.LineTo(xLb-45, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*45), yLb+round(k*200));
   // right foot
-  screen.Canvas.LineTo(xLb-80, yLb+200);
+  screen.Canvas.LineTo(xLb-round(k*80), yLb+round(k*200));
   screen.Canvas.MoveTo(xC, yC);
   // left shoulder
-  screen.Canvas.LineTo(xC+70, yC-5);
+  screen.Canvas.LineTo(xC+round(k*70), yC-round(k*5));
   // left forearm
-  screen.Canvas.LineTo(xC+120, yC+40);
+  screen.Canvas.LineTo(xC+round(k*120), yC+round(k*40));
   // left wrist
-  screen.Canvas.LineTo(xC+120, yC+45);
+  screen.Canvas.LineTo(xC+round(k*120), yC+round(k*45));
   screen.Canvas.MoveTo(xC, yC);
   // right shoulder
-  screen.Canvas.LineTo(xC-30, yC+55);
+  screen.Canvas.LineTo(xC-round(k*30), yC+round(k*55));
   // right forearm
-  screen.Canvas.LineTo(xC+50, yC+40);
+  screen.Canvas.LineTo(xC+round(k*50), yC+round(k*40));
   // right wrist
-  screen.Canvas.LineTo(xC+65, yC+45);
+  screen.Canvas.LineTo(xC+round(k*65), yC+round(k*45));
 end;
 
 
@@ -892,11 +900,16 @@ begin
   i:=0;
   fps.Enabled := true;
   fps.Interval := 100;
-  MediaPlayer2.FileName:= 'D:\BSUIR\Ћабы\Ћабороторна€ работа - 1 ќјиѕ\Delphi\2 сем\Dance\Win32\Debug\-_.mp3';
-   MediaPlayer1.FileName:= 'D:\BSUIR\Ћабы\Ћабороторна€ работа - 1 ќјиѕ\Delphi\2 сем\Dance\Win32\Debug\Clap.mp3';
+   MediaPlayer2.FileName:= 'lida swx.mp3';
+   MediaPlayer1.FileName:= 'Clap.mp3';
    MediaPlayer1.Open;
-  MediaPlayer2.Open;
-  MediaPlayer2.Play;
+  //MediaPlayer2.Open;
+  //MediaPlayer2.Play;
+  xc_start:=550;
+  yc_start:=170;
+  k:=1;
+  sign:=true;
+
 end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
