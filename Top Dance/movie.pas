@@ -41,6 +41,9 @@ type
     procedure startClick(Sender: TObject);
     procedure fpsTimer(Sender: TObject);
     procedure walkingTimer(Sender: TObject);
+    procedure DrawBackground(Sender: TObject; typeFloor: integer;
+      typeDoor: integer);
+    procedure DrawFloor1Var(Sender: TObject; typeOfFloor: integer);
   private
     { Private declarations }
   public
@@ -1226,7 +1229,7 @@ begin
 
 end;
 
-procedure TForm1.PictureDrawW6(Sender: TObject); //fix
+procedure TForm1.PictureDrawW6(Sender: TObject); // fix
 var
   xc, yc, xLb, yLb: integer;
 
@@ -1282,39 +1285,233 @@ begin
 
 end;
 
+procedure TForm1.DrawFloor1Var(Sender: TObject; typeOfFloor: integer);
+var
+  squareWidth, squareHeight: integer;
+  horisontHeight, triangleSite, distance, colorIndicator: integer;
+  square, triangle: Array Of Tpoint;
+  LineAngle: real;
+var
+  tempSizeX, tempSizeY: integer;
+begin
+  horisontHeight := Trunc(0.45 * screen.ClientHeight);
+  tempSizeX := 0;
+  tempSizeY := 0;
+  squareHeight := 75;
+  squareWidth := 50;
+  SetLength(square, 4);
+  SetLength(triangle, 3);
+  colorIndicator := 0;
+
+  case typeOfFloor of
+    1:
+      begin
+
+        screen.Canvas.Brush.Color := rgb(240, 148, 215);
+        while tempSizeY <= screen.ClientHeight - 15 do
+        begin
+
+          tempSizeX := 0;
+          triangle[0].Y := horisontHeight + tempSizeY;
+          triangle[1].Y := tempSizeY + squareHeight + horisontHeight;
+          triangle[2].Y := tempSizeY + squareHeight + horisontHeight;
+          triangle[0].X := tempSizeX;
+          triangle[1].X := tempSizeX;
+          triangle[2].X := tempSizeX + Trunc(4.8 * squareWidth);
+          screen.Canvas.Polygon(triangle);
+
+          square[0].Y := horisontHeight + tempSizeY;
+          square[1].Y := horisontHeight + tempSizeY;
+          square[2].Y := tempSizeY + squareHeight + horisontHeight;
+          square[3].Y := tempSizeY + squareHeight + horisontHeight;
+
+          while tempSizeX <= screen.ClientWidth - 15 do
+          begin
+            inc(colorIndicator);
+            if colorIndicator mod 2 = 0 then
+              screen.Canvas.Brush.Color := rgb(240, 148, 215)
+            else
+              screen.Canvas.Brush.Color := rgb(66, 225, 255);
+
+            square[0].X := tempSizeX;
+            square[1].X := tempSizeX + Trunc(2.4 * squareWidth);
+            square[2].X := tempSizeX + Trunc(4.8 * squareWidth);
+            square[3].X := tempSizeX + Trunc(2.4 * squareWidth);
+            screen.Canvas.Polygon(square);
+            tempSizeX := tempSizeX + Trunc(2.4 * squareWidth);
+
+          end;
+          tempSizeY := tempSizeY + squareHeight;
+
+        end;
+
+      end;
+    2:
+      begin
+
+        screen.Canvas.Brush.Color := rgb(66, 225, 255);
+        while tempSizeY <= screen.ClientHeight - 15 do
+        begin
+
+          tempSizeX := 0;
+          triangle[0].Y := horisontHeight + tempSizeY;
+          triangle[1].Y := tempSizeY + squareHeight + horisontHeight;
+          triangle[2].Y := tempSizeY + squareHeight + horisontHeight;
+          triangle[0].X := tempSizeX;
+          triangle[1].X := tempSizeX;
+          triangle[2].X := tempSizeX + Trunc(4.8 * squareWidth);
+          screen.Canvas.Polygon(triangle);
+
+          square[0].Y := horisontHeight + tempSizeY;
+          square[1].Y := horisontHeight + tempSizeY;
+          square[2].Y := tempSizeY + squareHeight + horisontHeight;
+          square[3].Y := tempSizeY + squareHeight + horisontHeight;
+
+          while tempSizeX <= screen.ClientWidth - 15 do
+          begin
+            inc(colorIndicator);
+            if colorIndicator mod 2 = 0 then
+              screen.Canvas.Brush.Color := rgb(66, 225, 255)
+            else
+              screen.Canvas.Brush.Color := rgb(240, 148, 215);
+
+            square[0].X := tempSizeX;
+            square[1].X := tempSizeX + Trunc(2.4 * squareWidth);
+            square[2].X := tempSizeX + Trunc(4.8 * squareWidth);
+            square[3].X := tempSizeX + Trunc(2.4 * squareWidth);
+            screen.Canvas.Polygon(square);
+            tempSizeX := tempSizeX + Trunc(2.4 * squareWidth);
+
+          end;
+          tempSizeY := tempSizeY + squareHeight;
+
+        end;
+
+      end;
+  end;
+end;
+
+procedure TForm1.DrawBackground(Sender: TObject; typeFloor: integer;
+  typeDoor: integer);
+var
+  horisontHeight: integer;
+  FrontWall, sightWall, door: array of Tpoint;
+
+begin
+  horisontHeight := Trunc(0.45 * screen.ClientHeight);
+  screen.Canvas.Brush.Color := rgb(191, 195, 255);
+  SetLength(FrontWall, 4);
+  SetLength(sightWall, 4);
+  // FirstWall
+  FrontWall[0].X := 0;
+  FrontWall[0].Y := 0;
+  FrontWall[1].X := Trunc(0.7 * screen.ClientWidth);
+  FrontWall[1].Y := 0;
+  FrontWall[2].X := Trunc(0.7 * screen.ClientWidth);
+  FrontWall[2].Y := horisontHeight;
+  FrontWall[3].X := 0;
+  FrontWall[3].Y := horisontHeight;
+  screen.Canvas.Polygon(FrontWall);
+  /// /////////////////
+  DrawFloor1Var(Sender, typeFloor);
+  screen.Canvas.Brush.Color := rgb(163, 169, 255);
+  // SecondWall
+  sightWall[0].X := Trunc(0.7 * screen.ClientWidth);
+  sightWall[0].Y := horisontHeight;
+  sightWall[1].X := Trunc(0.7 * screen.ClientWidth);
+  sightWall[1].Y := 0;
+  sightWall[2].X := screen.ClientWidth;
+  sightWall[2].Y := 0;
+  sightWall[3].X := screen.ClientWidth;
+  sightWall[3].Y := screen.ClientHeight;
+  screen.Canvas.Polygon(sightWall);
+  /// /////////////////
+
+  // Door
+  case typeDoor of
+    0:
+      begin
+        screen.Canvas.Brush.Color := rgb(82, 82, 58);
+        screen.Canvas.Rectangle(150, horisontHeight - 230, 280, horisontHeight);
+      end;
+    1:
+      begin
+        screen.Canvas.Brush.Color := rgb(255, 255, 255);
+        screen.Canvas.Rectangle(150, horisontHeight - 230, 280, horisontHeight);
+        SetLength(door, 4);
+        door[0].X := 150;
+        door[0].Y := horisontHeight - 230;
+        door[1].X := 240;
+        door[1].Y := horisontHeight - 200;
+        door[2].X := 240;                            
+        door[2].Y := horisontHeight + 60;
+        door[3].X := 150;
+        door[3].Y := horisontHeight;
+        screen.Canvas.Brush.Color := rgb(82, 82, 58);
+        screen.Canvas.Polygon(door);
+      end;
+      2:
+      Begin
+       screen.Canvas.Brush.Color := rgb(255, 255, 255);
+        screen.Canvas.Rectangle(150, horisontHeight - 230, 280, horisontHeight);
+        SetLength(door, 4);
+         SetLength(door, 4);
+        door[0].X := 150;
+        door[0].Y := horisontHeight - 230;
+        door[1].X := 150;
+        door[1].Y := horisontHeight ;
+        door[2].X := 20;                            
+        door[2].Y := horisontHeight ;
+        door[3].X := 20;
+        door[3].Y :=horisontHeight - 230;
+        screen.Canvas.Brush.Color := rgb(82, 82, 58);
+        screen.Canvas.Polygon(door);
+      End;
+  end;
+
+  screen.Canvas.Brush.Color := rgb(255, 255, 255);
+end;
+
 procedure TForm1.walkingTimer(Sender: TObject);
 
 begin
   inc(i);
+
   case i of
     1:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 1);
         PictureDrawW1(Sender);
       end;
     2:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 1);
         PictureDrawW2(Sender);
       end;
     3:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDrawW3(Sender);
       end;
     4:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDrawW4(Sender);
       end;
     5:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 0);
         PictureDrawW5(Sender);
       end;
     6:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 0);
         PictureDrawW6(Sender);
       end;
   end;

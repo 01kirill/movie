@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = '2'
   ClientHeight = 724
   ClientWidth = 1114
   Color = clBtnFace
@@ -16,8 +16,8 @@ object Form1: TForm1
   object screen: TImage
     Left = 8
     Top = 0
-    Width = 1137
-    Height = 665
+    Width = 1140
+    Height = 670
   end
   object start: TButton
     Left = 520
