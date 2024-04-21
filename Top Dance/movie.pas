@@ -17,6 +17,9 @@ type
     MediaPlayer2: TMediaPlayer;
     MediaPlayer1: TMediaPlayer;
     walking: TTimer;
+    door: TTimer;
+    MediaPlayer3: TMediaPlayer;
+    MediaPlayer4: TMediaPlayer;
     procedure FormCreate(Sender: TObject);
     procedure PictureDraw1(Sender: TObject);
     procedure PictureDraw2(Sender: TObject);
@@ -44,6 +47,7 @@ type
     procedure DrawBackground(Sender: TObject; typeFloor: integer;
       typeDoor: integer);
     procedure DrawFloor1Var(Sender: TObject; typeOfFloor: integer);
+    procedure doorTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -870,21 +874,25 @@ begin
     1:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw1(Sender);
       end;
     2:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw2(Sender);
       end;
     3:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw3(Sender);
       end;
     4:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDraw4(Sender);
         MediaPlayer1.Play;
         // хлопок
@@ -892,52 +900,62 @@ begin
     5:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDraw5(Sender);
       end;
     6:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDraw6(Sender);
       end;
     7:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw7(Sender);
       end;
     8:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw8(Sender);
       end;
     9:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw9(Sender);
       end;
     10:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDraw10(Sender);
       end;
     11:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDraw11(Sender);
         MediaPlayer1.Play;
       end;
     12:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
         PictureDraw12(Sender);
       end;
     13:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw13(Sender);
       end;
     14:
       begin
         screen.Picture := nil;
+        DrawBackground(Sender, 2, 2);
         PictureDraw14(Sender);
       end;
   end;
@@ -1391,6 +1409,37 @@ begin
   end;
 end;
 
+procedure TForm1.doorTimer(Sender: TObject);
+begin
+  inc(i);
+  case i of
+    1:
+      begin
+        screen.Picture := nil;
+        DrawBackground(Sender, 1, 0);
+      end;
+    2:
+      begin
+        screen.Picture := nil;
+        DrawBackground(Sender, 1, 1);
+        MediaPlayer3.Play;
+      end;
+    3:
+      begin
+        screen.Picture := nil;
+        DrawBackground(Sender, 1, 2);
+        MediaPlayer4.Play;
+      end;
+  end;
+  if i = 3 then
+  begin
+    sleep(200);
+    door.Enabled := false;
+    walking.Enabled := true;
+    walking.Interval := 150;
+  end;
+end;
+
 procedure TForm1.DrawBackground(Sender: TObject; typeFloor: integer;
   typeDoor: integer);
 var
@@ -1443,27 +1492,27 @@ begin
         door[0].Y := horisontHeight - 230;
         door[1].X := 240;
         door[1].Y := horisontHeight - 200;
-        door[2].X := 240;                            
+        door[2].X := 240;
         door[2].Y := horisontHeight + 60;
         door[3].X := 150;
         door[3].Y := horisontHeight;
         screen.Canvas.Brush.Color := rgb(82, 82, 58);
         screen.Canvas.Polygon(door);
       end;
-      2:
+    2:
       Begin
-       screen.Canvas.Brush.Color := rgb(255, 255, 255);
+        screen.Canvas.Brush.Color := rgb(255, 255, 255);
         screen.Canvas.Rectangle(150, horisontHeight - 230, 280, horisontHeight);
         SetLength(door, 4);
-         SetLength(door, 4);
+        SetLength(door, 4);
         door[0].X := 150;
         door[0].Y := horisontHeight - 230;
         door[1].X := 150;
-        door[1].Y := horisontHeight ;
-        door[2].X := 20;                            
-        door[2].Y := horisontHeight ;
+        door[1].Y := horisontHeight;
+        door[2].X := 20;
+        door[2].Y := horisontHeight;
         door[3].X := 20;
-        door[3].Y :=horisontHeight - 230;
+        door[3].Y := horisontHeight - 230;
         screen.Canvas.Brush.Color := rgb(82, 82, 58);
         screen.Canvas.Polygon(door);
       End;
@@ -1481,60 +1530,74 @@ begin
     1:
       begin
         screen.Picture := nil;
-        DrawBackground(Sender, 1, 1);
+        DrawBackground(Sender, 2, 2);
         PictureDrawW1(Sender);
       end;
     2:
       begin
         screen.Picture := nil;
-        DrawBackground(Sender, 1, 1);
+        DrawBackground(Sender, 2, 2);
         PictureDrawW2(Sender);
       end;
     3:
       begin
         screen.Picture := nil;
-        DrawBackground(Sender, 1, 2);
+        DrawBackground(Sender, 2, 2);
         PictureDrawW3(Sender);
       end;
     4:
       begin
         screen.Picture := nil;
-        DrawBackground(Sender, 2, 2);
+        DrawBackground(Sender, 1, 2);
         PictureDrawW4(Sender);
       end;
     5:
       begin
         screen.Picture := nil;
-        DrawBackground(Sender, 2, 0);
+        DrawBackground(Sender, 1, 2);
         PictureDrawW5(Sender);
       end;
     6:
       begin
         screen.Picture := nil;
-        DrawBackground(Sender, 2, 0);
+        DrawBackground(Sender, 1, 2);
         PictureDrawW6(Sender);
       end;
   end;
+  inc(xc_start, 35);
+  inc(yc_start, 10);
+  k := k + 0.05;
   if i = 6 then
     i := 0;
+  if (xc_start >= 600) and (yc_start >= 250) then
+  begin
+    walking.Enabled := false;
+    fps.Enabled := true;
+    fps.Interval := 100;
+    sleep(200);
+  end;
 end;
 
 procedure TForm1.startClick(Sender: TObject);
 begin
   i := 0;
-  // fps.Enabled := true;
-  // fps.Interval := 100;
-  walking.Enabled := true;
-  walking.Interval := 150;
-  MediaPlayer2.FileName := 'Cadillac.mp3';
+  fps.Enabled := false;
+  walking.Enabled := false;
+  door.Enabled := true;
+  door.Interval := 700;
+  MediaPlayer2.FileName := 'morgen.mp3';
   MediaPlayer1.FileName := 'Clap.mp3';
+  MediaPlayer3.FileName := 'door_open.mp3';
+  MediaPlayer4.FileName := 'door.mp3';
   MediaPlayer1.Open;
   MediaPlayer2.Open;
-  // MediaPlayer2.Play;
-  xc_start := 550;
-  yc_start := 170;
-  k := 1;
-  // sign := true;
+  MediaPlayer3.Open;
+  MediaPlayer4.Open;
+  MediaPlayer2.Play;
+  xc_start := 200;
+  yc_start := 200;
+  k := 0.6;
+  sign := true;
 
 end;
 
@@ -1542,6 +1605,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   fps.Enabled := false;
   walking.Enabled := false;
+  door.Enabled := false;
   screen.Canvas.Brush.Color := clWhite;
   Color := clWhite;
 end;

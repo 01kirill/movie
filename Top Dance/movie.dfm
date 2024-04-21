@@ -1,9 +1,10 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderStyle = bsToolWindow
   Caption = '2'
-  ClientHeight = 724
-  ClientWidth = 1114
+  ClientHeight = 752
+  ClientWidth = 1118
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -49,6 +50,22 @@ object Form1: TForm1
     ParentDoubleBuffered = False
     TabOrder = 2
   end
+  object MediaPlayer3: TMediaPlayer
+    Left = 808
+    Top = 707
+    Width = 253
+    Height = 30
+    Visible = False
+    TabOrder = 3
+  end
+  object MediaPlayer4: TMediaPlayer
+    Left = 160
+    Top = 703
+    Width = 253
+    Height = 30
+    Visible = False
+    TabOrder = 4
+  end
   object fps: TTimer
     OnTimer = fpsTimer
     Left = 56
@@ -62,5 +79,10 @@ object Form1: TForm1
     OnTimer = walkingTimer
     Left = 96
     Top = 672
+  end
+  object door: TTimer
+    OnTimer = doorTimer
+    Left = 424
+    Top = 680
   end
 end
