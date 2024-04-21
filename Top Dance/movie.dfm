@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 659
+  ClientHeight = 724
   ClientWidth = 1114
   Color = clBtnFace
   DoubleBuffered = True
@@ -20,8 +20,8 @@ object Form1: TForm1
     Height = 665
   end
   object start: TButton
-    Left = 528
-    Top = 619
+    Left = 520
+    Top = 671
     Width = 75
     Height = 25
     Caption = 'start movie'
@@ -30,8 +30,8 @@ object Form1: TForm1
     OnClick = startClick
   end
   object MediaPlayer2: TMediaPlayer
-    Left = 648
-    Top = 614
+    Left = 808
+    Top = 671
     Width = 253
     Height = 30
     DoubleBuffered = True
@@ -40,8 +40,8 @@ object Form1: TForm1
     TabOrder = 1
   end
   object MediaPlayer1: TMediaPlayer
-    Left = 80
-    Top = 624
+    Left = 160
+    Top = 671
     Width = 253
     Height = 30
     DoubleBuffered = True
@@ -51,11 +51,16 @@ object Form1: TForm1
   end
   object fps: TTimer
     OnTimer = fpsTimer
-    Left = 480
-    Top = 616
+    Left = 56
+    Top = 672
   end
   object OpenDialog1: TOpenDialog
-    Left = 608
-    Top = 616
+    Left = 8
+    Top = 672
+  end
+  object walking: TTimer
+    OnTimer = walkingTimer
+    Left = 96
+    Top = 672
   end
 end
