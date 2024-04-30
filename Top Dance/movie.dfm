@@ -66,8 +66,8 @@ object Form1: TForm1
     Visible = False
     TabOrder = 4
   end
-  object fps: TTimer
-    OnTimer = fpsTimer
+  object dance: TTimer
+    OnTimer = danceTimer
     Left = 56
     Top = 672
   end

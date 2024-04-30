@@ -12,7 +12,7 @@ type
   TForm1 = class(TForm)
     screen: TImage;
     start: TButton;
-    fps: TTimer;
+    dance: TTimer;
     OpenDialog1: TOpenDialog;
     MediaPlayer2: TMediaPlayer;
     MediaPlayer1: TMediaPlayer;
@@ -42,7 +42,7 @@ type
     procedure PictureDrawW5(Sender: TObject);
     procedure PictureDrawW6(Sender: TObject);
     procedure startClick(Sender: TObject);
-    procedure fpsTimer(Sender: TObject);
+    procedure danceTimer(Sender: TObject);
     procedure walkingTimer(Sender: TObject);
     procedure DrawBackground(Sender: TObject; typeFloor: integer;
       typeDoor: integer);
@@ -862,7 +862,7 @@ begin
   screen.Canvas.LineTo(xc + round(k * 65), yc + round(k * 45));
 end;
 
-procedure TForm1.fpsTimer(Sender: TObject);
+procedure TForm1.danceTimer(Sender: TObject);
 begin
   inc(i);
   if sign then
@@ -1572,8 +1572,8 @@ begin
   if (xc_start >= 600) and (yc_start >= 250) then
   begin
     walking.Enabled := false;
-    fps.Enabled := true;
-    fps.Interval := 100;
+    dance.Enabled := true;
+    dance.Interval := 100;
     sleep(200);
   end;
 end;
@@ -1581,7 +1581,7 @@ end;
 procedure TForm1.startClick(Sender: TObject);
 begin
   i := 0;
-  fps.Enabled := false;
+  dance.Enabled := false;
   walking.Enabled := false;
   door.Enabled := true;
   door.Interval := 700;
@@ -1603,7 +1603,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  fps.Enabled := false;
+  dance.Enabled := false;
   walking.Enabled := false;
   door.Enabled := false;
   screen.Canvas.Brush.Color := clWhite;
